@@ -1,0 +1,19 @@
+name: Autograding
+on: [push]
+jobs:
+  autograding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required to see the merge history
+
+      - name: Verify PR Merged
+        uses: classroom-resources/autograding-command-tester@v1
+        with:
+          test-name: Verify PR Merged
+          setup-command: ''
+          command: git log --merges --oneline | grep -q 'Merge pull request'
+          timeout: 1
+          max-score: 100
